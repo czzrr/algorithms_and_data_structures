@@ -1,7 +1,7 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include "node.hpp"
+#include "Node.hpp"
 #include <iostream>
 
 template<typename T>

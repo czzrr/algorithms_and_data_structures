@@ -1,5 +1,5 @@
-#include "linked_list.hpp"
-#include "node.hpp"
+#include "LinkedList.hpp"
+#include "Node.hpp"
 #include <iostream>
 
 using namespace std;

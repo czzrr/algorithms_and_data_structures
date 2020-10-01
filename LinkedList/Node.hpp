@@ -11,8 +11,8 @@ private:
 public:
   Node(T value);
   Node();
-  Node<T>(const Node<T>& a);
-  Node<T>& operator=(const Node<T>& a);
+  // Node<T>(const Node<T>& a);
+  // Node<T>& operator=(const Node<T>& a);
   T get_value();
   void set_value(T value);
   Node<T>* get_next();

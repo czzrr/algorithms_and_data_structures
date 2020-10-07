@@ -1,13 +1,16 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "../LinkedList/LinkedList.hpp"
+#include <forward_list>
 #include <iostream>
 
+using namespace std;
+
+/* Stack implementation using linked list */
 template<typename T>
 class Stack {
 private:
-  LinkedList<T> stack;
+  forward_list<T> stack;
 public:
   Stack();
   Stack(const Stack<T>& s);
@@ -18,7 +21,7 @@ public:
   void push(T);
   bool empty();
   
-  LinkedList<T> get_list() const;
+  forward_list<T> get_list() const;
 
   std::ostream& operator<<(std::ostream& out);
 };
@@ -27,7 +30,7 @@ public:
 
 template<typename T>
 Stack<T>::Stack() {
-  stack = LinkedList<T>();
+  stack = forward_list<T>();
 }
 
 template <typename T>
@@ -45,19 +48,21 @@ template<typename T>
 T Stack<T>::peek() {
   if (empty())
     throw std::runtime_error("Stack is empty");
-  return stack.get(0);
+  return stack.front();
 }
 
 template<typename T>
 T Stack<T>::pop() {
   if (empty())
     throw std::runtime_error("Stack is empty");
-  return stack.remove_at(0);
+  T top = stack.front();
+  stack.pop_front();
+  return top;
 }
 
 template <typename T>
 void Stack<T>::push(T t) {
-  stack.add(t);
+  stack.push_front(t);
 }
 
 template <typename T>
@@ -66,14 +71,26 @@ bool Stack<T>::empty() {
 }
 
 template <typename T>
-LinkedList<T> Stack<T>::get_list() const {
+forward_list<T> Stack<T>::get_list() const {
   return stack;
 }
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, Stack<T>& stack) {
-  LinkedList<T> list = stack.get_list();
-  return out << list;
+  if (stack.empty())
+    return out << "[]";
+
+  forward_list<T> list = stack.get_list();
+
+  out << "[";
+  auto elem = list.begin();
+  out << *elem;
+  elem++;
+  for (; elem != list.end(); elem++)
+    out << ", " << *elem;
+  out << "]";
+
+  return out;
 }
 
 #endif

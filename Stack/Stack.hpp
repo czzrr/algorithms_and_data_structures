@@ -16,17 +16,30 @@ public:
   Stack(const Stack<T>& s);
   Stack<T>& operator=(const Stack<T>& s);
     
-  T peek();
+  T peek() const;
   T pop();
   void push(T);
-  bool empty();
+  bool empty() const;
   
   forward_list<T> get_list() const;
 
-  std::ostream& operator<<(std::ostream& out);
-};
+  friend std::ostream& operator<<(std::ostream& out, const Stack<T>& stack) {
+    if (stack.empty())
+      return out << "[]";
 
-// Implementation
+    forward_list<T> list = stack.stack;
+
+    out << "[";
+    auto elem = list.begin();
+    out << list.front();
+    elem++;
+    for (auto iter = ++list.begin(); iter != list.end(); iter++)
+      out << ", " << *iter;
+    out << "]";
+
+    return out;
+  }
+};
 
 template<typename T>
 Stack<T>::Stack() {
@@ -45,7 +58,7 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& s) {
 }
 
 template<typename T>
-T Stack<T>::peek() {
+T Stack<T>::peek() const {
   if (empty())
     throw std::runtime_error("Stack is empty");
   return stack.front();
@@ -66,31 +79,8 @@ void Stack<T>::push(T t) {
 }
 
 template <typename T>
-bool Stack<T>::empty() {
+bool Stack<T>::empty() const {
   return stack.empty();
-}
-
-template <typename T>
-forward_list<T> Stack<T>::get_list() const {
-  return stack;
-}
-
-template <typename T>
-std::ostream& operator<<(std::ostream& out, Stack<T>& stack) {
-  if (stack.empty())
-    return out << "[]";
-
-  forward_list<T> list = stack.get_list();
-
-  out << "[";
-  auto elem = list.begin();
-  out << *elem;
-  elem++;
-  for (; elem != list.end(); elem++)
-    out << ", " << *elem;
-  out << "]";
-
-  return out;
 }
 
 #endif

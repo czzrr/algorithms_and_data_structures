@@ -17,14 +17,13 @@ public:
   
   void add(T value);
   void add_end(T value);
-  T get(int i);
-  bool contains(T value);
+  T get(int i) const;
+  bool contains(T value) const;
   bool remove(T value);
   T remove_at(int i);
-  bool empty();
+  bool empty() const;
   
   std::ostream& operator<< (std::ostream& out);
-
 };
 
 // Implementation
@@ -82,7 +81,7 @@ void LinkedList<T>::add_end(T value) {
 }
 
 template<typename T>
-T LinkedList<T>::get(int i) {
+T LinkedList<T>::get(int i) const {
   if (i < 0)
     throw std::out_of_range("Index out of range");
 
@@ -97,7 +96,7 @@ T LinkedList<T>::get(int i) {
 }
 
 template<typename T>
-bool LinkedList<T>::contains(T value) {
+bool LinkedList<T>::contains(T value) const {
   Node<T>* node = head;
   while (node) {
     if (node->get_value() == value)
@@ -165,7 +164,7 @@ T LinkedList<T>::remove_at(int i) {
 
 
 template<typename T>
-bool LinkedList<T>::empty() {
+bool LinkedList<T>::empty() const {
   return !head;
 }
 
